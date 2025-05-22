@@ -1,8 +1,8 @@
 .money-lent {
   padding: 2rem;
-  background-color: #1f1f1f;
+  background-color: #f5eeee;
   min-height: 100vh;
-  color: white;
+  color: rgb(12, 12, 12);
 }
 
 .loan-form {
@@ -47,7 +47,7 @@
 
 .loans-list {
   margin-top: 2rem;
-  background-color: #1f1f1f;
+  background-color: #f1eded;
   padding: 1rem;
   border-radius: 8px;
 }
@@ -55,20 +55,28 @@
 .loans-list table {
   width: 100%;
   border-collapse: collapse;
-  color: white;
+  color: rgb(26, 25, 25);
 }
 
-.loans-list th,
-.loans-list td {
+.loans-list th{
   border: 1px solid #333;
   padding: 0.5rem;
   text-align: left;
+  color:#edeaea
 }
+.loans-list td{
+  border: 1px solid #333;
+  padding: 0.5rem;
+  text-align: left;
+  color:#edeaea
 
+}
 .loans-list th {
-  background-color: #333;
+  background-color: #121111;
 }
-
+.loans-list td {
+  background-color: #343333;
+}
 .btn-delete {
   background-color: #e74c3c;
   color: white;
