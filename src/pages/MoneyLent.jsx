@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { collection, addDoc, getDocs, deleteDoc, doc } from 'firebase/firestore';
-import { db } from '../firebase'; 
 import '../styles/MoneyLent.css';
+import { collection, addDoc, deleteDoc, doc, onSnapshot } from "firebase/firestore";
+import { db } from "../firebase";
 
 function MoneyLent() {
   const [loans, setLoans] = useState([]);
@@ -12,16 +12,16 @@ function MoneyLent() {
     dueDate: ''
   });
 
-  const loansCollection = collection(db, 'moneyLent');
-
-  const fetchLoans = async () => {
-    const data = await getDocs(loansCollection);
-    const fetchedLoans = data.docs.map(doc => ({ ...doc.data(), id: doc.id }));
-    setLoans(fetchedLoans);
-  };
-
   useEffect(() => {
-    fetchLoans();
+    const unsubscribe = onSnapshot(collection(db, "moneyLent"), (snapshot) => {
+      const loanData = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setLoans(loanData);
+    });
+
+    return () => unsubscribe();
   }, []);
 
   const handleChange = (e) => {
@@ -37,20 +37,31 @@ function MoneyLent() {
     if (!newLoan.person || !newLoan.amount) return;
 
     const loanToAdd = {
-      person: newLoan.person.trim(),
+      person: newLoan.person,
       amount: parseFloat(newLoan.amount),
       date: newLoan.date || new Date().toISOString().split('T')[0],
       dueDate: newLoan.dueDate || ''
     };
 
-    await addDoc(loansCollection, loanToAdd);
-    setNewLoan({ person: '', amount: '', date: '', dueDate: '' });
-    fetchLoans();
+    try {
+      await addDoc(collection(db, "moneyLent"), loanToAdd);
+      setNewLoan({
+        person: '',
+        amount: '',
+        date: '',
+        dueDate: ''
+      });
+    } catch (error) {
+      console.error("Error adding loan: ", error);
+    }
   };
 
   const deleteLoan = async (id) => {
-    await deleteDoc(doc(db, 'moneyLent', id));
-    fetchLoans();
+    try {
+      await deleteDoc(doc(db, "moneyLent", id));
+    } catch (error) {
+      console.error("Error deleting loan: ", error);
+    }
   };
 
   return (
@@ -106,9 +117,10 @@ function MoneyLent() {
 
         <button type="submit" className="btn-add">Add Loan</button>
       </form>
-    
+
       <div className="loans-list">
         <h3>Current Loans</h3>
+
         {loans.length === 0 ? (
           <p>No loans recorded yet.</p>
         ) : (
