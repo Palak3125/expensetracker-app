@@ -1,0 +1,32 @@
+.expenses {
+    width: 100%;
+  }
+  .head{
+    color:black;
+  }
+  .expense-summary {
+    margin-bottom: 2rem;
+  }
+  
+  .expense-form {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  
+  .expenses-list table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .expenses-list th, .expenses-list td {
+    border: 1px solid #ddd;
+    padding: 0.5rem;
+    text-align: left;
+  }
+  
+  .expenses-list th {
+    background-color: #f2f2f2;
+  }

@@ -1,0 +1,82 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  font-family: Arial, sans-serif;
+  width:100%;
+}
+
+.app-header {
+  background-color: rgb(134, 180, 221);
+  justify-content: space-between;
+  color: rgb(27, 26, 26);
+  padding: 20px;
+  width:100%;
+  font-family:"Trebuchet MS", Helvetica, sans-serif ;
+  align-items: center;
+}
+
+
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+.logo-img {
+  height: 60px;
+  margin-right: 12px;
+  width:80px;
+}
+
+.header-title {
+  font-size: 23px;
+  font-weight: bold;
+  color: #111;
+}
+
+.app-header h1 {
+  margin: 0;
+ 
+}
+
+.app-header nav ul {
+  display: flex;
+  list-style: none;
+  padding: 5px;
+  margin-top: 1rem;
+  align-items: right;
+}
+
+.app-header nav li {
+  margin-right: 1rem;
+  
+}
+.app-header nav a {
+  color: rgb(41, 39, 39);
+  text-decoration: none;
+  padding: 0.5rem;
+}
+
+.app-header nav a:hover {
+  background-color: #88c8ef;
+  border-radius: 4px;
+ 
+}
+
+.app-content {
+  flex: 1;
+  padding: 1rem;
+  max-width: 1200px;
+  width: 100%;
+  box-sizing:border-box;
+ 
+}
+
+.app-footer {
+  background-color: rgb(134, 180, 221);
+  color: rgb(27, 26, 26);
+  text-align: center;
+  padding: 1rem;
+  margin-top: auto;
+  width:100%;
+}

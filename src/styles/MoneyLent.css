@@ -1,0 +1,79 @@
+.money-lent {
+  padding: 2rem;
+  background-color: #1f1f1f;
+  min-height: 100vh;
+  color: white;
+}
+
+.loan-form {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 8px rgba(6, 6, 6, 0.2), 0 6px 20px rgba(6, 6, 6, 0.2);
+  color: black;
+}
+
+.form-style {
+  color: #252424;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.btn-add {
+  background-color: #27ae60;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.loans-list {
+  margin-top: 2rem;
+  background-color: #1f1f1f;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.loans-list table {
+  width: 100%;
+  border-collapse: collapse;
+  color: white;
+}
+
+.loans-list th,
+.loans-list td {
+  border: 1px solid #333;
+  padding: 0.5rem;
+  text-align: left;
+}
+
+.loans-list th {
+  background-color: #333;
+}
+
+.btn-delete {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
