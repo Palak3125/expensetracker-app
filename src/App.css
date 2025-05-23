@@ -5,86 +5,9 @@
   font-family: Arial, sans-serif;
   width:100%;
 }
-
 .app-header {
   background-color: rgb(134, 180, 221);
-  justify-content: space-between;
-  color: rgb(27, 26, 26);
-  padding: 20px;
-  width:100%;
-  font-family:"Trebuchet MS", Helvetica, sans-serif ;
-  align-items: center;
-}
-
-
-.header-left {
-  display: flex;
-  align-items: center;
-}
-
-.logo-img {
-  height: 60px;
-  margin-right: 12px;
-  width:80px;
-}
-
-.header-title {
-  font-size: 23px;
-  font-weight: bold;
-  color: #111;
-}
-
-.app-header h1 {
-  margin: 0;
- 
-}
-
-.app-header nav ul {
-  display: flex;
-  list-style: none;
-  padding: 5px;
-  margin-top: 1rem;
-  align-items: right;
-}
-
-.app-header nav li {
-  margin-right: 1rem;
-  
-}
-.app-header nav a {
-  color: rgb(41, 39, 39);
-  text-decoration: none;
-  padding: 0.5rem;
-}
-
-.app-header nav a:hover {
-  background-color: #88c8ef;
-  border-radius: 4px;
- 
-}
-
-.app-content {
-  flex: 1;
-  padding: 1rem;
-  max-width: 1200px;
-  width: 100%;
-  box-sizing:border-box;
- 
-}
-
-.app-footer {
-  background-color: rgb(134, 180, 221);
-  color: rgb(27, 26, 26);
-  text-align: center;
-  padding: 1rem;
-  margin-top: auto;
-  width:100%;
-}
-
-
-.app-header {
-  background-color: #111;
-  color: white;
+  color: rgb(248, 245, 245);
   padding: 1rem 2rem;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
 }
@@ -109,11 +32,11 @@
 .header-title {
   font-size: 24px;
   font-weight: bold;
-  color: white;
+  color: rgb(33, 31, 31);
 }
 
 .header-title .highlight {
-  color: #7c3aed; /* Purple highlight like CodeHelp */
+  color: #7533e6; 
 }
 
 .nav-links {
@@ -123,13 +46,15 @@
 }
 
 .nav-links a {
-  color: white;
+  color: black;
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
 .nav-links a:hover {
-  color: #7c3aed;
+  color: white;
+  background-color: #cb67f6;
+  border-radius: 4px;
 }
 
 .nav-right .login-button {
@@ -145,4 +70,22 @@
 
 .nav-right .login-button:hover {
   background-color: #6a28d9;
+}
+
+.app-content {
+  flex: 1;
+  padding: 1rem;
+  max-width: 1200px;
+  width: 100%;
+  box-sizing:border-box;
+ 
+}
+
+.app-footer {
+  background-color: rgb(134, 180, 221);
+  color: rgb(27, 26, 26);
+  text-align: center;
+  padding: 1rem;
+  margin-top: auto;
+  width:100%;
 }
