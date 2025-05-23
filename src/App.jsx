@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
 
@@ -9,16 +9,8 @@ import Expenses from './pages/Expenses.jsx';
 import Budget from './pages/Budget.jsx';
 import logo from './assets/logo.jpeg';
 
-
-
-
 function App() {
-  const [isOpen, setIsOpen] = useState(false);
 
-  const toggleMenu = () => {
-    setIsOpen(prev => !prev);
-  };
-  
   return (
     <Router>
     <div className="app">
@@ -28,15 +20,14 @@ function App() {
               <img src={logo} alt="App Logo" className="logo-img" />
               <h1 className="header-title">Expense<span className="highlight">Track</span></h1>
             </div>
-            <button className="hamburger" onClick={toggleMenu}>☰</button>
-            {isOpen && (
+            
             <nav className="nav-links">
               <Link to="/">Dashboard</Link>
               <Link to="/money-lent">Money Lent</Link>
               <Link to="/expenses">Expenses</Link>
               <Link to="/budget">Budget</Link>
             </nav>
-            )}
+            
             <div className="nav-right">
               <button className="login-button">Login</button>
             </div>
