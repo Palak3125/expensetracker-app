@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/MoneyLent.css';
-import { collection, addDoc, deleteDoc, doc, onSnapshot } from "firebase/firestore";
+import { collection, addDoc, deleteDoc, doc, onSnapshot, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebase";
 
 function MoneyLent() {
@@ -40,7 +40,8 @@ function MoneyLent() {
       person: newLoan.person,
       amount: parseFloat(newLoan.amount),
       date: newLoan.date || new Date().toISOString().split('T')[0],
-      dueDate: newLoan.dueDate || ''
+      dueDate: newLoan.dueDate || '',
+      createdAt: serverTimestamp()  // ✅ timestamp added here
     };
 
     try {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { collection, onSnapshot, doc, setDoc, getDoc } from 'firebase/firestore';
+import { collection, onSnapshot, doc, setDoc, getDoc, query, orderBy } from 'firebase/firestore';
 import { db } from '../firebase';
 import '../styles/Dashboard.css';
 
@@ -9,6 +9,7 @@ function Dashboard() {
   const [monthlyExpenses, setMonthlyExpenses] = useState(0);
   const [baseBalance, setBaseBalance] = useState(0);
   const [balanceInput, setBalanceInput] = useState('');
+  const [activities, setActivities] = useState([]);
 
   useEffect(() => {
     const fetchBaseBalance = async () => {
@@ -49,6 +50,34 @@ function Dashboard() {
     };
   }, [baseBalance]);
 
+  useEffect(() => {
+    const qLent = query(collection(db, 'moneyLent'), orderBy('createdAt', 'desc'));
+    const qExpenses = query(collection(db, 'expenses'), orderBy('createdAt', 'desc'));
+
+    const unsubscribeLent = onSnapshot(qLent, (snapshot) => {
+      const lentActivities = snapshot.docs.map(doc => ({
+        id: doc.id,
+        text: `Lent to ${doc.data().person} - ₹${doc.data().amount.toFixed(2)}`,
+        createdAt: doc.data().createdAt?.toDate() || new Date()
+      }));
+      setActivities(prev => [...prev.filter(a => !a.text.startsWith('Lent to')), ...lentActivities].sort((a, b) => b.createdAt - a.createdAt));
+    });
+
+    const unsubscribeExpenses = onSnapshot(qExpenses, (snapshot) => {
+      const expenseActivities = snapshot.docs.map(doc => ({
+        id: doc.id,
+        text: `${doc.data().title} - ₹${doc.data().amount.toFixed(2)}`,
+        createdAt: doc.data().createdAt?.toDate() || new Date()
+      }));
+      setActivities(prev => [...prev.filter(a => a.text.startsWith('Lent to')), ...expenseActivities].sort((a, b) => b.createdAt - a.createdAt));
+    });
+
+    return () => {
+      unsubscribeLent();
+      unsubscribeExpenses();
+    };
+  }, []);
+
   const handleBalanceSave = async () => {
     const value = parseFloat(balanceInput);
     if (!isNaN(value)) {
@@ -65,34 +94,20 @@ function Dashboard() {
       <h2 className="dashboard-heading">Dashboard</h2>
 
       <div className="dashboard-cards" style={{ width: '100%' }}>
-        {/* Current Balance Card with Input and Save Button inside */}
         <div className="card">
           <h3>Current Balance</h3>
           <p className="amount">₹{totalBalance.toFixed(2)}</p>
-
           <div style={{ display: 'flex', gap: '10px', marginTop: '10px', flexWrap: 'wrap' }}>
             <input
               type="number"
               value={balanceInput}
               onChange={(e) => setBalanceInput(e.target.value)}
               placeholder="Enter new balance"
-              style={{
-                padding: '6px 10px',
-                width: '140px',
-                borderRadius: '5px',
-                border: '1px solid #ccc'
-              }}
+              style={{ padding: '6px 10px', width: '140px', borderRadius: '5px', border: '1px solid #ccc' }}
             />
             <button
               onClick={handleBalanceSave}
-              style={{
-                padding: '6px 12px',
-                backgroundColor: '#4CAF50',
-                border: 'none',
-                color: 'white',
-                borderRadius: '5px',
-                cursor: 'pointer'
-              }}
+              style={{ padding: '6px 12px', backgroundColor: '#4CAF50', border: 'none', color: 'white', borderRadius: '5px', cursor: 'pointer' }}
             >
               Save
             </button>
@@ -110,14 +125,12 @@ function Dashboard() {
         </div>
       </div>
 
-      {/* Removed standalone balance input section */}
-
       <div className="recent-activity">
         <h3>Recent Activity</h3>
         <ul>
-          <li>Paid electricity bill - ₹85.50</li>
-          <li>Grocery shopping - ₹120.75</li>
-          <li>Lent to Alex - ₹50.00</li>
+          {activities.slice(0, 5).map((act, index) => (
+            <li key={index}>{act.text}</li>
+          ))}
         </ul>
       </div>
     </div>
