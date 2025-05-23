@@ -9,6 +9,8 @@ function Dashboard() {
   const [monthlyExpenses, setMonthlyExpenses] = useState(0);
   const [baseBalance, setBaseBalance] = useState(0);
   const [balanceInput, setBalanceInput] = useState('');
+  const [lentActivities, setLentActivities] = useState([]);
+  const [expenseActivities, setExpenseActivities] = useState([]);
   const [activities, setActivities] = useState([]);
 
   useEffect(() => {
@@ -50,33 +52,49 @@ function Dashboard() {
     };
   }, [baseBalance]);
 
+  // Listen and set lent activities
   useEffect(() => {
     const qLent = query(collection(db, 'moneyLent'), orderBy('createdAt', 'desc'));
-    const qExpenses = query(collection(db, 'expenses'), orderBy('createdAt', 'desc'));
-
     const unsubscribeLent = onSnapshot(qLent, (snapshot) => {
-      const lentActivities = snapshot.docs.map(doc => ({
-        id: doc.id,
-        text: `Lent to ${doc.data().person} - ₹${doc.data().amount.toFixed(2)}`,
-        createdAt: doc.data().createdAt?.toDate() || new Date()
-      }));
-      setActivities(prev => [...prev.filter(a => !a.text.startsWith('Lent to')), ...lentActivities].sort((a, b) => b.createdAt - a.createdAt));
+      const lentActs = snapshot.docs.map(doc => {
+        const data = doc.data();
+        return {
+          id: doc.id,
+          text: `Lent to ${data.person} - ₹${data.amount?.toFixed(2) || '0.00'}`,
+          createdAt: data.createdAt?.toDate() || new Date()
+        };
+      });
+      setLentActivities(lentActs);
     });
 
-    const unsubscribeExpenses = onSnapshot(qExpenses, (snapshot) => {
-      const expenseActivities = snapshot.docs.map(doc => ({
-        id: doc.id,
-        text: `${doc.data().title} - ₹${doc.data().amount.toFixed(2)}`,
-        createdAt: doc.data().createdAt?.toDate() || new Date()
-      }));
-      setActivities(prev => [...prev.filter(a => a.text.startsWith('Lent to')), ...expenseActivities].sort((a, b) => b.createdAt - a.createdAt));
-    });
-
-    return () => {
-      unsubscribeLent();
-      unsubscribeExpenses();
-    };
+    return () => unsubscribeLent();
   }, []);
+
+  // Listen and set expense activities
+  useEffect(() => {
+    const qExpenses = query(collection(db, 'expenses'), orderBy('createdAt', 'desc'));
+    const unsubscribeExpenses = onSnapshot(qExpenses, (snapshot) => {
+      const expenseActs = snapshot.docs.map(doc => {
+        const data = doc.data();
+        const label = data.title || data.description || 'Expense';
+        return {
+          id: doc.id,
+          text: `${label} - ₹${data.amount?.toFixed(2) || '0.00'}`,
+          createdAt: data.createdAt?.toDate() || new Date()
+        };
+      });
+      setExpenseActivities(expenseActs);
+    });
+
+    return () => unsubscribeExpenses();
+  }, []);
+
+  // Merge activities whenever lent or expenses activities update
+  useEffect(() => {
+    const merged = [...lentActivities, ...expenseActivities]
+      .sort((a, b) => b.createdAt - a.createdAt);
+    setActivities(merged);
+  }, [lentActivities, expenseActivities]);
 
   const handleBalanceSave = async () => {
     const value = parseFloat(balanceInput);
@@ -128,8 +146,8 @@ function Dashboard() {
       <div className="recent-activity">
         <h3>Recent Activity</h3>
         <ul>
-          {activities.slice(0, 5).map((act, index) => (
-            <li key={index}>{act.text}</li>
+          {activities.slice(0, 5).map((act) => (
+            <li key={act.id}>{act.text}</li>
           ))}
         </ul>
       </div>

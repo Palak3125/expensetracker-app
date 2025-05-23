@@ -16,18 +16,35 @@
     margin-bottom: 2rem;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   }
-  
+  .expenses-list{
+   margin-top: 2rem;
+  background-color: #f1eded;
+  padding: 1rem;
+  border-radius: 8px;
+  }
   .expenses-list table {
     width: 100%;
-    border-collapse: collapse;
+  border-collapse: collapse;
+  color: rgb(26, 25, 25);
   }
   
-  .expenses-list th, .expenses-list td {
-    border: 1px solid #ddd;
-    padding: 0.5rem;
-    text-align: left;
+  .expenses-list th{
+    border: 1px solid #333;
+  padding: 0.5rem;
+  text-align: left;
+  color:#edeaea
   }
-  
-  .expenses-list th {
-    background-color: #f2f2f2;
+   .expenses-list td {
+    border: 1px solid #333;
+  padding: 0.5rem;
+  text-align: left;
+  color:#edeaea
+  }
+
+   .expenses-list th {
+   background-color: #121111;
+  }
+
+   .expenses-list td {
+   background-color: #343333;
   }
