@@ -14,8 +14,10 @@
 
 .navbar {
   display: flex;
+  flex-wrap:wrap;
   align-items: center;
   justify-content: space-between;
+  gap: 1rem;
 }
 
 .nav-left {
@@ -95,6 +97,11 @@
     flex-direction: column;
     align-items: flex-start;
   }
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
 
   .nav-links {
     flex-direction: column;
@@ -102,7 +109,12 @@
   }
 
   .nav-right {
-    margin: 5px 0;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+  }
+  .nav-links a {
+    padding: 0.5rem 1rem;
   }
 
   .header-title {
