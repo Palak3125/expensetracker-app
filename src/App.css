@@ -6,14 +6,9 @@
   width:100%;
 }
 .app-header {
-  display: flex;
-  flex-wrap:wrap;
-  justify-content:space-between;
-  align-items:center;
-  flex-direction: row;
-  background-color: rgb(134, 180, 221);
-  color: rgb(248, 245, 245);
-  padding: 10px 20px;
+  background-color:white;
+  color: white;
+  padding: 1rem 2rem;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
 }
 
@@ -32,19 +27,17 @@
   height: 40px;
   margin-right: 10px;
   border-radius: 8px;
-  object-fit: cover;
 }
 
 .header-title {
   font-size: 24px;
   font-weight: bold;
-  color: rgb(33, 31, 31);
+  color:black;
 }
 
 .header-title .highlight {
-  color: #7533e6; 
+  color: #7c3aed; 
 }
-
 .nav-links {
   display: flex;
   gap: 1.5rem;
@@ -59,8 +52,8 @@
 
 .nav-links a:hover {
   color: white;
-  background-color: #cb67f6;
   border-radius: 4px;
+  background-color: rgb(184, 91, 243);
 }
 
 .nav-right .login-button {
@@ -77,6 +70,7 @@
 .nav-right .login-button:hover {
   background-color: #6a28d9;
 }
+
 
 .app-content {
   flex: 1;
@@ -102,12 +96,12 @@
     align-items: flex-start;
   }
 
-  nav ul {
+  .nav-links {
     flex-direction: column;
     width: 100%;
   }
 
-  nav li {
+  .nav-right {
     margin: 5px 0;
   }
 
