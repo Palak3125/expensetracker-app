@@ -41,7 +41,7 @@ function MoneyLent() {
       amount: parseFloat(newLoan.amount),
       date: newLoan.date || new Date().toISOString().split('T')[0],
       dueDate: newLoan.dueDate || '',
-      createdAt: serverTimestamp()  // ✅ timestamp added here
+      createdAt: serverTimestamp()  
     };
 
     try {
