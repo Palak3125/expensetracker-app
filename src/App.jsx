@@ -13,21 +13,28 @@ function App() {
   return (
     <Router>
     <div className="app">
-      <header className="app-header">
-        <div className="header-left">
-          <img src={logo} alt="App Logo" className="logo-img" />
-          <h1 className="header-title" >ExpenseTrack</h1>
-           </div>
-          <nav>
-            <ul>
-              <li className='space'><Link to="/">Dashboard</Link></li>
-              <li ><Link to="/money-lent">Money Lent</Link></li>
-              <li ><Link to="/expenses">Expenses</Link></li>
-              <li><Link to="/budget">Budget</Link></li>
-            </ul>
-          </nav>
-       
-      </header>
+     <header className="app-header">
+          <div className="navbar">
+            {/* Logo and Title */}
+            <div className="nav-left">
+              <img src={logo} alt="App Logo" className="logo-img" />
+              <h1 className="header-title">Expense<span className="highlight">Track</span></h1>
+            </div>
+
+            {/* Navigation Links */}
+            <nav className="nav-links">
+              <Link to="/">Dashboard</Link>
+              <Link to="/money-lent">Money Lent</Link>
+              <Link to="/expenses">Expenses</Link>
+              <Link to="/budget">Budget</Link>
+            </nav>
+
+            {/* Login Button */}
+            <div className="nav-right">
+              <button className="login-button">Login</button>
+            </div>
+          </div>
+        </header>
         
         <main className="app-content" >
           <Routes>
