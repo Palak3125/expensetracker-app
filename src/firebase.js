@@ -1,7 +1,7 @@
 // firebase.js
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection } from "firebase/firestore";
-
+import { getAuth, GoogleAuthProvider } from "firebase/auth";
 const firebaseConfig = {
   /*apiKey: "AIzaSyCAfijQTf_9GIFBpsh9I61RlSm-ffXzsqo",
   authDomain: "money-management-app-68a6f.firebaseapp.com",
@@ -22,6 +22,8 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
 export const loansCollection = collection(db, 'loans');
 export { db };
+export { auth, provider };
