@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { collection, onSnapshot, doc, setDoc, getDoc, query, orderBy } from 'firebase/firestore';
 import { db } from '../firebase';
+import { auth } from '../firebase';
+import { onAuthStateChanged } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
 import '../styles/Dashboard.css';
 
 function Dashboard() {
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+
   const [totalBalance, setTotalBalance] = useState(0);
   const [totalLent, setTotalLent] = useState(0);
   const [monthlyExpenses, setMonthlyExpenses] = useState(0);
@@ -12,6 +18,19 @@ function Dashboard() {
   const [lentActivities, setLentActivities] = useState([]);
   const [expenseActivities, setExpenseActivities] = useState([]);
   const [activities, setActivities] = useState([]);
+
+  
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        setUser(currentUser);
+      } else {
+        navigate('/login');
+      }
+    });
+
+    return () => unsubscribe();
+  }, [navigate]);
 
   useEffect(() => {
     const fetchBaseBalance = async () => {
@@ -52,7 +71,6 @@ function Dashboard() {
     };
   }, [baseBalance]);
 
-  // Listen and set lent activities
   useEffect(() => {
     const qLent = query(collection(db, 'moneyLent'), orderBy('createdAt', 'desc'));
     const unsubscribeLent = onSnapshot(qLent, (snapshot) => {
@@ -70,7 +88,6 @@ function Dashboard() {
     return () => unsubscribeLent();
   }, []);
 
-  // Listen and set expense activities
   useEffect(() => {
     const qExpenses = query(collection(db, 'expenses'), orderBy('createdAt', 'desc'));
     const unsubscribeExpenses = onSnapshot(qExpenses, (snapshot) => {
@@ -89,7 +106,6 @@ function Dashboard() {
     return () => unsubscribeExpenses();
   }, []);
 
-  // Merge activities whenever lent or expenses activities update
   useEffect(() => {
     const merged = [...lentActivities, ...expenseActivities]
       .sort((a, b) => b.createdAt - a.createdAt);
@@ -106,6 +122,8 @@ function Dashboard() {
       alert('Please enter a valid number');
     }
   };
+
+  if (!user) return <p>Loading...</p>; // While checking auth
 
   return (
     <div className="dashboard">

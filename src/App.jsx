@@ -2,12 +2,13 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
 
-// Page components
+
 import Dashboard from './pages/Dashboard.jsx';
 import MoneyLent from './pages/MoneyLent.jsx';
 import Expenses from './pages/Expenses.jsx';
 import Budget from './pages/Budget.jsx';
 import logo from './assets/logo.jpeg';
+import Login from "./pages/login.jsx";
 
 function App() {
 
@@ -29,7 +30,9 @@ function App() {
             </nav>
             
             <div className="nav-right">
+              <Link to="/login">
               <button className="login-button">Login</button>
+              </Link>
             </div>
           </div>
         </header>
@@ -40,6 +43,7 @@ function App() {
             <Route path="/money-lent" element={<MoneyLent />} />
             <Route path="/expenses" element={<Expenses />} />
             <Route path="/budget" element={<Budget />} />
+            <Route path="/login" element={<Login />} />
           </Routes>
         </main>
         <footer className="app-footer">
