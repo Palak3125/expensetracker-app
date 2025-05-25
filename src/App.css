@@ -1,3 +1,5 @@
+/*
+
 .app {
   display: flex;
   flex-direction: column;
@@ -6,7 +8,7 @@
   width:100%;
 }
 .app-header {
-  background-color:white;
+  background-color:rgb(247, 219, 247);
   color: white;
   padding: 1rem 2rem;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
@@ -58,7 +60,7 @@
   background-color: rgb(184, 91, 243);
 }
 
-.nav-right .login-button {
+.nav-right .button {
   background-color: #7c3aed;
   color: white;
   border: none;
@@ -84,7 +86,7 @@
 }
 
 .app-footer {
-  background-color:#d2bef4;
+  background-color: rgb(247, 219, 247);
   color: rgb(27, 26, 26);
   text-align: center;
   padding: 1rem;
@@ -113,6 +115,132 @@
     display: flex;
     justify-content: flex-start;
   }
+  .nav-links a {
+    padding: 0.5rem 1rem;
+  }
+
+  .header-title {
+    font-size: 1.2rem;
+  }
+}
+
+*/
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  font-family: Arial, sans-serif;
+  width: 100%;
+  background-color: #0f0f1a;
+  color: #f3f3f3;
+}
+
+.app-header {
+  background-color: #1e1e2e;
+  color: #c3aaff;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.6);
+}
+
+.navbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+}
+
+.logo-img {
+  height: 40px;
+  margin-right: 10px;
+  border-radius: 8px;
+}
+
+.header-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #f3f3f3;
+}
+
+.header-title .highlight {
+  color: #a855f7;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 16px;
+}
+
+.nav-links a {
+  color: #e0e0e0;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: white;
+  background-color: #5b21b6;
+  border-radius: 4px;
+  padding: 0.25rem 0.5rem;
+}
+
+.nav-right .button {
+  background-color: #7c3aed;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  font-weight: 600;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.nav-right .login-button:hover {
+  background-color: #6a28d9;
+}
+
+.app-content {
+  flex: 1;
+  padding: 1rem;
+  max-width: 1200px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.app-footer {
+  background-color: #1e1e2e;
+  color: #d1cfe8;
+  text-align: center;
+  padding: 1rem;
+  margin-top: auto;
+  width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  .app-header,
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .nav-right {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+  }
+
   .nav-links a {
     padding: 0.5rem 1rem;
   }

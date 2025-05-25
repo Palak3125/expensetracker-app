@@ -41,7 +41,7 @@ function Expenses() {
       amount: parseFloat(newExpense.amount),
       category: newExpense.category,
       date: newExpense.date,
-      createdAt: serverTimestamp()  // <-- Add Firestore server timestamp here
+      createdAt: serverTimestamp()  
     };
 
     try {

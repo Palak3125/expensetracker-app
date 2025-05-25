@@ -175,7 +175,6 @@ function Dashboard() {
 
 export default Dashboard;*/
 
-
 import React, { useState, useEffect } from 'react';
 import { collection, onSnapshot, doc, setDoc, getDoc, query, orderBy } from 'firebase/firestore';
 import { db } from '../firebase';
@@ -294,7 +293,7 @@ function Dashboard() {
   };
 
   if (loading) return <p>Loading...</p>;
-  if (!user) return null;  // No user, don't render
+  if (!user) return null;  
 
   return (
     <div className="dashboard">

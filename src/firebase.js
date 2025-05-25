@@ -1,7 +1,6 @@
-// firebase.js
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection } from "firebase/firestore";
-import { getAuth, GoogleAuthProvider } from "firebase/auth";
+import { getAuth, GoogleAuthProvider,FacebookAuthProvider } from "firebase/auth";
 const firebaseConfig = {
   /*apiKey: "AIzaSyCAfijQTf_9GIFBpsh9I61RlSm-ffXzsqo",
   authDomain: "money-management-app-68a6f.firebaseapp.com",
@@ -24,6 +23,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
+export const facebookProvider = new FacebookAuthProvider();
 export const loansCollection = collection(db, 'loans');
 export { db };
 export { auth, provider };

@@ -1,4 +1,5 @@
-.expenses {
+/*.expenses {
+
     width: 100%;
     color:black;
   }
@@ -48,3 +49,197 @@
    .expenses-list td {
    background-color: #343333;
   }
+  */
+/*.expense-form {
+  background-color: #1e1e2e;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  color: #f3f3f3;
+  margin-bottom: 2rem;
+}
+.expense-summary {
+    margin-bottom: 2rem;
+}
+  
+.expense-form h2 {
+  margin-top: 0;
+  color: #d8b4fe;
+}
+
+.expense-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.expense-form input,
+.expense-form select {
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 6px;
+  background-color: #2a2a40;
+  color: #ffffff;
+}
+
+.expense-form input:focus,
+.expense-form select:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #7c3aed;
+}
+
+.expense-form button {
+  padding: 0.75rem 1rem;
+  background-color: #7c3aed;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.expense-form button:hover {
+  background-color: #6a28d9;
+}
+
+
+ .expenses-list{
+   margin-top: 2rem;
+  padding: 1rem;
+  border-radius: 8px;
+  }*/
+
+  .expenses {
+  color: #e0e0e0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 2rem;
+}
+
+h2 {
+  color: #00e091;
+  margin-bottom: 1.5rem;
+}
+
+.expense-summary {
+  margin-bottom: 2rem;
+}
+
+.card {
+  background-color: #1e1e2e;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 255, 170, 0.1);
+  color: #ffffff;
+}
+
+.amount {
+  font-size: 1.5rem;
+  color: #00e091;
+  font-weight: bold;
+}
+
+.expense-form {
+  background-color: #14141f;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 255, 170, 0.1);
+  margin-bottom: 2rem;
+  color: #f3f3f3;
+}
+
+.expense-form h3.head {
+  color: #00e091;
+  margin-bottom: 1rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label.head {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #cccccc;
+  font-weight: 600;
+}
+
+.expense-form input,
+.expense-form select {
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 6px;
+  background-color: #2a2a40;
+  color: #ffffff;
+  width: 100%;
+}
+
+.expense-form input:focus,
+.expense-form select:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #00e091;
+}
+
+.expense-form button,
+.btn-add {
+  padding: 0.75rem 1rem;
+  background-color: #00e091;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.expense-form button:hover,
+.btn-add:hover {
+  background-color: #00c07a;
+}
+
+.expenses-list {
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: #1e1e2e;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 255, 170, 0.1);
+}
+
+.expenses-list h3 {
+  color: #00e091;
+  margin-bottom: 1rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #e0e0e0;
+}
+
+th, td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #333;
+}
+
+th {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+td {
+  background-color: #1b1b2d;
+}
+
+.btn-delete {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-delete:hover {
+  background-color: #c0392b;
+}
