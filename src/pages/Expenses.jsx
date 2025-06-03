@@ -3,6 +3,7 @@ import '../styles/Expenses.css';
 import { collection, addDoc, deleteDoc, doc, onSnapshot, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebase";
 
+
 function Expenses() {
   const [expenses, setExpenses] = useState([]);
   const [newExpense, setNewExpense] = useState({
@@ -35,7 +36,7 @@ function Expenses() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!newExpense.description || !newExpense.amount || !newExpense.category) return;
-
+    
     const expenseToAdd = {
       description: newExpense.description,
       amount: parseFloat(newExpense.amount),
@@ -66,7 +67,7 @@ function Expenses() {
   };
 
   const totalExpenses = expenses.reduce((sum, exp) => sum + exp.amount, 0);
-
+  
   return (
     <div className="expenses">
       <h2>Expenses Tracker</h2>
@@ -177,3 +178,113 @@ function Expenses() {
 }
 
 export default Expenses;
+/*
+import React, { useState, useEffect } from 'react';
+import '../styles/Expenses.css';
+import { collection, addDoc, deleteDoc, doc, onSnapshot, serverTimestamp } from "firebase/firestore";
+import { db, auth } from "../firebase";
+import { useAuthState } from 'react-firebase-hooks/auth';
+
+function Expenses() {
+  const [user, loading] = useAuthState(auth);
+  const [expenses, setExpenses] = useState([]);
+  const [newExpense, setNewExpense] = useState({
+    title: '',
+    amount: ''
+  });
+
+  useEffect(() => {
+    if (!user) return;
+
+    const expensesCollection = collection(db, 'users', user.uid, 'expenses');
+    const unsubscribe = onSnapshot(expensesCollection, (snapshot) => {
+      const fetchedExpenses = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setExpenses(fetchedExpenses);
+    });
+
+    return () => unsubscribe();
+  }, [user]);
+
+  const handleInputChange = (e) => {
+    setNewExpense({ ...newExpense, [e.target.name]: e.target.value });
+  };
+
+  const handleAddExpense = async (e) => {
+    e.preventDefault();
+    if (!user) return;
+
+    if (newExpense.title.trim() === '' || newExpense.amount.trim() === '') {
+      alert("Please fill in all fields");
+      return;
+    }
+    const amountNum = parseFloat(newExpense.amount);
+    if (isNaN(amountNum) || amountNum <= 0) {
+      alert("Please enter a valid positive amount");
+      return;
+    }
+
+    try {
+      await addDoc(collection(db, 'users', user.uid, 'expenses'), {
+        title: newExpense.title,
+        amount: amountNum,
+        createdAt: serverTimestamp()
+      });
+      setNewExpense({ title: '', amount: '' });
+    } catch (error) {
+      console.error("Error adding expense: ", error);
+    }
+  };
+
+  const handleDeleteExpense = async (id) => {
+    if (!user) return;
+
+    try {
+      await deleteDoc(doc(db, 'users', user.uid, 'expenses', id));
+    } catch (error) {
+      console.error("Error deleting expense: ", error);
+    }
+  };
+
+  if (loading) return <p>Loading...</p>;
+  if (!user) return null;
+
+  return (
+    <div className="expenses-container">
+      <h2>Expenses</h2>
+      <form onSubmit={handleAddExpense}>
+        <input
+          type="text"
+          placeholder="Title"
+          name="title"
+          value={newExpense.title}
+          onChange={handleInputChange}
+          required
+        />
+        <input
+          type="number"
+          placeholder="Amount"
+          name="amount"
+          value={newExpense.amount}
+          onChange={handleInputChange}
+          required
+          min="0.01"
+          step="0.01"
+        />
+        <button type="submit">Add</button>
+      </form>
+      <ul className="expense-list">
+        {expenses.map(({ id, title, amount }) => (
+          <li key={id}>
+            {title} - ₹{amount.toFixed(2)}
+            <button className="delete-btn" onClick={() => handleDeleteExpense(id)}>Delete</button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default Expenses;*/

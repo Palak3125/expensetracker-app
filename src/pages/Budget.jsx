@@ -4,9 +4,11 @@ import {
   collection, query, onSnapshot, addDoc,
   updateDoc, deleteDoc, doc, where, getDocs
 } from 'firebase/firestore';
+
 import '../styles/Budget.css';
 
 function Budget() {
+  
   const [budgets, setBudgets] = useState([]);
   const [newBudget, setNewBudget] = useState({
     category: '',
@@ -16,7 +18,8 @@ function Budget() {
   const [expenses, setExpenses] = useState([]);
 
   useEffect(() => {
-    const q = query(collection(db, 'budgets'));
+    
+    const q = query(collection(db,'budgets'));
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const data = snapshot.docs.map(doc => ({
         id: doc.id,
@@ -25,7 +28,7 @@ function Budget() {
       setBudgets(data);
     });
 
-    const expQ = query(collection(db, 'expenses'));
+    const expQ = query(collection(db,'expenses'));
     const unsubscribeExp = onSnapshot(expQ, (snapshot) => {
       const expData = snapshot.docs.map(doc => doc.data());
       setExpenses(expData);
@@ -90,7 +93,7 @@ function Budget() {
   const calculateProgress = (spent, limit) => {
     return Math.min((spent / limit) * 100, 100);
   };
-
+  
   return (
     <div className="budget">
       <h2>Budget Planner</h2>
@@ -199,3 +202,94 @@ function Budget() {
 }
 
 export default Budget;
+/*import React, { useState, useEffect } from "react";
+import "../styles/Budget.css";
+import  {doc, setDoc, onSnapshot } from "firebase/firestore";
+import { db, auth } from "../firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
+
+function Budget() {
+  const [user, loading] = useAuthState(auth);
+  const [budget, setBudget] = useState(null);
+  const [expense, setExpense] = useState(null);
+  const [budgetInput, setBudgetInput] = useState("");
+  const [expenseInput, setExpenseInput] = useState("");
+
+  useEffect(() => {
+    if (!user) return;
+
+    const budgetDoc = doc(db, "users", user.uid, "budgets", "current");
+    const unsubscribe = onSnapshot(budgetDoc, (docSnap) => {
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        setBudget(data.budget ?? 0);
+        setExpense(data.expense ?? 0);
+      } else {
+        setBudget(0);
+        setExpense(0);
+      }
+    });
+
+    return () => unsubscribe();
+  }, [user]);
+
+  const handleBudgetSave = async () => {
+    if (!user) return;
+
+    const budgetValue = parseFloat(budgetInput);
+    if (isNaN(budgetValue) || budgetValue < 0) {
+      alert("Please enter a valid non-negative number");
+      return;
+    }
+
+    const expenseValue = parseFloat(expenseInput);
+    if (isNaN(expenseValue) || expenseValue < 0) {
+      alert("Please enter a valid non-negative number");
+      return;
+    }
+
+    const budgetDoc = doc(db, "users", user.uid, "budgets", "current");
+    await setDoc(budgetDoc, {
+      budget: budgetValue,
+      expense: expenseValue,
+    });
+    setBudget(budgetValue);
+    setExpense(expenseValue);
+    setBudgetInput("");
+    setExpenseInput("");
+  };
+
+  if (loading) return <p>Loading...</p>;
+  if (!user) return null;
+
+  return (
+    <div className="budget-container">
+      <h2>Budget Planner</h2>
+      <div className="current-budget">
+        <p>Budget: ₹{budget?.toFixed(2) ?? "0.00"}</p>
+        <p>Expense: ₹{expense?.toFixed(2) ?? "0.00"}</p>
+      </div>
+      <div className="budget-inputs">
+        <input
+          type="number"
+          placeholder="Set Budget"
+          value={budgetInput}
+          onChange={(e) => setBudgetInput(e.target.value)}
+          min="0"
+          step="0.01"
+        />
+        <input
+          type="number"
+          placeholder="Set Expense"
+          value={expenseInput}
+          onChange={(e) => setExpenseInput(e.target.value)}
+          min="0"
+          step="0.01"
+        />
+        <button onClick={handleBudgetSave}>Save</button>
+      </div>
+    </div>
+  );
+}
+
+export default Budget;*/

@@ -2,14 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, collection } from "firebase/firestore";
 import { getAuth, GoogleAuthProvider,FacebookAuthProvider } from "firebase/auth";
 const firebaseConfig = {
-  /*apiKey: "AIzaSyCAfijQTf_9GIFBpsh9I61RlSm-ffXzsqo",
-  authDomain: "money-management-app-68a6f.firebaseapp.com",
-  projectId: "money-management-app-68a6f",
-  storageBucket: "money-management-app-68a6f.firebasestorage.app",
-  messagingSenderId: "961628966048",
-  appId: "1:961628966048:web:9da753f12a11542b4d8dc5",
-  measurementId: "G-56W0B1F784"*/
-
+  
   apiKey: "AIzaSyB6K0QRMD8tsfCE0zhja9FBtlU6YfyOqtY",
   authDomain: "money-app-d553a.firebaseapp.com",
   projectId: "money-app-d553a",
