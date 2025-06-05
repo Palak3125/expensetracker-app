@@ -95,6 +95,8 @@
   min-height: 100vh;
   color: #00e091;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .loan-form {
@@ -183,4 +185,39 @@
   padding: 0.4rem 0.8rem;
   border-radius: 4px;
   cursor: pointer;
+}
+
+
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+
+@media (max-width: 600px) {
+  .loans-list table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .loan-form, .loans-list {
+    padding: 1rem;
+  }
+
+  .form-group input, .btn-add {
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  .btn-add {
+    padding: 0.6rem;
+  }
+
+  .loans-list th, .loans-list td {
+    font-size: 0.85rem;
+    padding: 0.5rem;
+  }
 }
