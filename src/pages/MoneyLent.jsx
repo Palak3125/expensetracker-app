@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/MoneyLent.css';
 import { collection, addDoc, deleteDoc, doc, onSnapshot, serverTimestamp } from "firebase/firestore";
-import { db } from "../firebase";
-
+import { db,auth } from "../firebase";
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 function MoneyLent() {
+  const [user] = useAuthState(auth);
   const [loans, setLoans] = useState([]);
   const [newLoan, setNewLoan] = useState({
     person: '',
@@ -14,7 +15,8 @@ function MoneyLent() {
   });
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(collection(db, "moneyLent"), (snapshot) => {
+    if (!user) return;
+    const unsubscribe = onSnapshot(collection(db,'users',user.uid , "moneyLent"), (snapshot) => {
       const loanData = snapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data()
@@ -23,7 +25,7 @@ function MoneyLent() {
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [user]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -46,7 +48,7 @@ function MoneyLent() {
     };
 
     try {
-      await addDoc(collection(db, "moneyLent"), loanToAdd);
+      await addDoc(collection(db,'users',user.uid , "moneyLent"), loanToAdd);
       setNewLoan({
         person: '',
         amount: '',
@@ -61,11 +63,12 @@ function MoneyLent() {
   const deleteLoan = async (id) => {
     
     try {
-      await deleteDoc(doc(db, "moneyLent", id));
+      await deleteDoc(doc(db,'users',user.uid , "moneyLent", id));
     } catch (error) {
       console.error("Error deleting loan: ", error);
     }
   };
+  if(!user) return <p>Loading User Data...</p>;
   
   return (
     <div className="money-lent">

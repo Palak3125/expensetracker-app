@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { db } from '../firebase';
+import { db,auth } from '../firebase';
 import {
   collection, query, onSnapshot, addDoc,
   updateDoc, deleteDoc, doc, where, getDocs
 } from 'firebase/firestore';
-
+import { useAuthState } from 'react-firebase-hooks/auth';
 import '../styles/Budget.css';
 
 function Budget() {
-  
+  const [user] = useAuthState(auth);
   const [budgets, setBudgets] = useState([]);
   const [newBudget, setNewBudget] = useState({
     category: '',
@@ -18,8 +18,8 @@ function Budget() {
   const [expenses, setExpenses] = useState([]);
 
   useEffect(() => {
-    
-    const q = query(collection(db,'budgets'));
+    if(!user) return ;
+    const q = query(collection(db,'users',user.uid ,'budgets'));
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const data = snapshot.docs.map(doc => ({
         id: doc.id,
@@ -28,7 +28,7 @@ function Budget() {
       setBudgets(data);
     });
 
-    const expQ = query(collection(db,'expenses'));
+    const expQ = query(collection(db,'users',user.uid ,'expenses'));
     const unsubscribeExp = onSnapshot(expQ, (snapshot) => {
       const expData = snapshot.docs.map(doc => doc.data());
       setExpenses(expData);
@@ -38,7 +38,7 @@ function Budget() {
       unsubscribe();
       unsubscribeExp();
     };
-  }, []);
+  }, [user]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -52,7 +52,7 @@ function Budget() {
     e.preventDefault();
 
     const q = query(
-      collection(db, 'budgets'),
+      collection(db,'users',user.uid , 'budgets'),
       where('category', '==', newBudget.category),
       where('month', '==', newBudget.month)
     );
@@ -60,11 +60,11 @@ function Budget() {
 
     if (!querySnapshot.empty) {
       const existingDoc = querySnapshot.docs[0];
-      await updateDoc(doc(db, 'budgets', existingDoc.id), {
+      await updateDoc(doc(db,'users',user.uid , 'budgets', existingDoc.id), {
         limit: parseFloat(newBudget.limit)
       });
     } else {
-      await addDoc(collection(db, 'budgets'), {
+      await addDoc(collection(db,'users',user.uid , 'budgets'), {
         category: newBudget.category,
         limit: parseFloat(newBudget.limit),
         month: newBudget.month
@@ -79,7 +79,7 @@ function Budget() {
   };
 
   const deleteBudget = async (id) => {
-    await deleteDoc(doc(db, 'budgets', id));
+    await deleteDoc(doc(db,'users',user.uid , 'budgets', id));
   };
 
   const calculateSpending = (category, month) => {
@@ -93,7 +93,7 @@ function Budget() {
   const calculateProgress = (spent, limit) => {
     return Math.min((spent / limit) * 100, 100);
   };
-  
+  if(!user) return <p>Loading User Data...</p>;
   return (
     <div className="budget">
       <h2>Budget Planner</h2>
@@ -168,9 +168,10 @@ function Budget() {
                   </div>
 
                   <div className="budget-details">
-                    <p className="head">Budget: ₹{budget.limit.toFixed(2)}</p>
-                    <p className="head">Spent: ₹{spent.toFixed(2)}</p>
-                    <p className="head">Remaining: ₹{remaining.toFixed(2)}</p>
+                    <p className="head">Budget: ₹{typeof budget.limit === 'number' ? budget.limit.toFixed(2) : '0.00'}</p>
+                    <p className="head">Spent: ₹{typeof spent === 'number' ? spent.toFixed(2) : '0.00'}</p>
+                    <p className="head">Remaining: ₹{typeof remaining === 'number' ? remaining.toFixed(2) : '0.00'}</p>
+
                   </div>
 
                   <div className="budget-progress">

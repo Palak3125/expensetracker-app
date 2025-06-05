@@ -176,13 +176,13 @@ function Dashboard() {
 export default Dashboard;*/
 
 import React, { useState, useEffect } from 'react';
-
 import { collection, onSnapshot, doc, setDoc, getDoc, query, orderBy } from 'firebase/firestore';
-import { db } from '../firebase';
+import { db, auth } from '../firebase';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import '../styles/Dashboard.css';
 
 function Dashboard() {
- 
+  const [user] = useAuthState(auth);
   const [totalBalance, setTotalBalance] = useState(0);
   const [totalLent, setTotalLent] = useState(0);
   const [monthlyExpenses, setMonthlyExpenses] = useState(0);
@@ -193,9 +193,9 @@ function Dashboard() {
   const [activities, setActivities] = useState([]);
 
   useEffect(() => {
-
+    if (!user) return;
     const fetchBaseBalance = async () => {
-      const docRef = doc(db, 'settings', 'balances');
+      const docRef = doc(db,'users',user.uid ,'settings', 'balances');
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         setBaseBalance(docSnap.data().value || 0);
@@ -204,14 +204,14 @@ function Dashboard() {
       }
     };
     fetchBaseBalance();
-  }, []);
+  }, [user]);
 
   useEffect(() => {
-
+    if (!user) return;
     let lentTotal = 0;
     let expensesTotal = 0;
 
-    const unsubscribeLent = onSnapshot(collection(db,'moneyLent'), (snapshot) => {
+    const unsubscribeLent = onSnapshot(collection(db,'users',user.uid ,'moneyLent'), (snapshot) => {
       lentTotal = 0;
       snapshot.forEach(doc => {
         lentTotal += doc.data().amount || 0;
@@ -220,7 +220,7 @@ function Dashboard() {
       setTotalBalance(baseBalance - expensesTotal - lentTotal);
     });
 
-    const unsubscribeExpenses = onSnapshot(collection(db, 'expenses'), (snapshot) => {
+    const unsubscribeExpenses = onSnapshot(collection(db,'users',user.uid , 'expenses'), (snapshot) => {
       expensesTotal = 0;
       snapshot.forEach(doc => {
         expensesTotal += doc.data().amount || 0;
@@ -233,12 +233,12 @@ function Dashboard() {
       unsubscribeLent();
       unsubscribeExpenses();
     };
-  }, [baseBalance]);
+  }, [baseBalance,user]);
 
   useEffect(() => {
   
-
-    const qLent = query(collection(db, 'moneyLent'), orderBy('createdAt', 'desc'));
+    if (!user) return;
+    const qLent = query(collection(db,'users',user.uid , 'moneyLent'), orderBy('createdAt', 'desc'));
     const unsubscribeLent = onSnapshot(qLent, (snapshot) => {
       const lentActs = snapshot.docs.map(doc => {
         const data = doc.data();
@@ -252,12 +252,11 @@ function Dashboard() {
     });
 
     return () => unsubscribeLent();
-  }, []);
+  }, [user]);
 
   useEffect(() => {
-    
-
-    const qExpenses = query(collection(db, 'expenses'), orderBy('createdAt', 'desc'));
+    if (!user) return;
+    const qExpenses = query(collection(db,'users',user.uid , 'expenses'), orderBy('createdAt', 'desc'));
     const unsubscribeExpenses = onSnapshot(qExpenses, (snapshot) => {
       const expenseActs = snapshot.docs.map(doc => {
         const data = doc.data();
@@ -272,7 +271,7 @@ function Dashboard() {
     });
 
     return () => unsubscribeExpenses();
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     const merged = [...lentActivities, ...expenseActivities]
@@ -283,14 +282,14 @@ function Dashboard() {
   const handleBalanceSave = async () => {
     const value = parseFloat(balanceInput);
     if (!isNaN(value)) {
-      await setDoc(doc(db, 'settings', 'balances'), { value });
+      await setDoc(doc(db,'users',user.uid , 'settings', 'balances'), { value });
       setBaseBalance(value);
       setBalanceInput('');
     } else {
       alert('Please enter a valid number');
     }
   };
-
+  if (!user) return <p>Loading User Data...</p>;
  
   return (
     <div className="dashboard">

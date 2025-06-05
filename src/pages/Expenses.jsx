@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/Expenses.css';
 import { collection, addDoc, deleteDoc, doc, onSnapshot, serverTimestamp } from "firebase/firestore";
-import { db } from "../firebase";
-
+import { db,auth } from "../firebase";
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 function Expenses() {
+  const [user] = useAuthState(auth);
   const [expenses, setExpenses] = useState([]);
   const [newExpense, setNewExpense] = useState({
     description: '',
@@ -14,7 +15,8 @@ function Expenses() {
   });
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(collection(db, "expenses"), (snapshot) => {
+    if(!user) return;
+    const unsubscribe = onSnapshot(collection(db,'users',user.uid , "expenses"), (snapshot) => {
       const expenseData = snapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data()
@@ -23,7 +25,7 @@ function Expenses() {
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [user]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -46,7 +48,7 @@ function Expenses() {
     };
 
     try {
-      await addDoc(collection(db, "expenses"), expenseToAdd);
+      await addDoc(collection(db,'users',user.uid , "expenses"), expenseToAdd);
       setNewExpense({
         description: '',
         amount: '',
@@ -60,14 +62,14 @@ function Expenses() {
 
   const deleteExpense = async (id) => {
     try {
-      await deleteDoc(doc(db, "expenses", id));
+      await deleteDoc(doc(db,'users',user.uid , "expenses", id));
     } catch (error) {
       console.error("Error deleting expense: ", error);
     }
   };
 
   const totalExpenses = expenses.reduce((sum, exp) => sum + exp.amount, 0);
-  
+  if(!user) return <p>Loading User Data...</p>;
   return (
     <div className="expenses">
       <h2>Expenses Tracker</h2>
