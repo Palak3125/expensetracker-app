@@ -1,12 +1,36 @@
-# React + Vite
+# 💰 Money Management App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A web application to track income, expenses, and debts with secure authentication, transaction history, and visual dashboards.
 
-Currently, two official plugins are available:
+## 🚀 Features
+- **Track Income & Expenses** – Categorize transactions and monitor spending.
+- **Debt Management** – Keep a record of borrowed and lent money.
+- **Transaction History** – Filter and sort past records.
+- **Visual Dashboards** – Charts and summaries for better insights.
+- **Secure Authentication** – Firebase Authentication for login/signup.
+- **Cloud Storage** – Firestore for real-time, scalable data storage.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🛠 Tech Stack
+- **Frontend**: HTML, CSS, JavaScript, React.js
+- **Backend/Database**: Firebase Authentication, Firestore
+- **Deployment**: Vercel
 
-## Expanding the ESLint configuration
+## 🚀 Live Demo & Repository
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **GitHub Repository:** [Money Management App](https://github.com/Palak3125/tracker-app)
+- **Live Demo:** [View Live](https://tracker-app-taupe.vercel.app/)
+
+## 📂 Installation & Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/Palak3125/tracker-app.git
+
+# Navigate into the project folder
+cd tracker-app
+
+# Install dependencies
+npm install
+
+# Start the development server
+npm start
