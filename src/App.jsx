@@ -171,7 +171,7 @@ import PrivateRoute from './pages/PrivateRoute.jsx';
 import PublicRoute from './pages/PublicRoute.jsx';
 
 function App() {
-  return (
+return (
     <Router>
       <div className="app">
         <header className="app-header">
@@ -192,12 +192,12 @@ function App() {
 
             <div className="nav-right">
               <Link to="/login">
-                <button className="button">Login</button>
+                <button className="login-btn">Login</button>
               </Link>
               <Link to="/register">
-                <button className="button">Sign Up</button>
+                <button className="signup-btn">Sign Up</button>
               </Link>
-              <button onClick={() => signOut(auth)}  className="button">Logout</button>
+              <button onClick={() => signOut(auth)}  className="glass-btn">Logout</button>
             </div>
           </div>
         </header>
@@ -262,5 +262,6 @@ function App() {
     </Router>
   );
 }
+
 
 export default App;
