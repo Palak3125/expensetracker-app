@@ -34,3 +34,14 @@ npm install
 
 # Start the development server
 npm start
+
+
+
+## 👩‍💻 Developed by
+
+**Palak Dwivedi**  
+
+📧 [palakdwivedi103@gmail.com](mailto:palakdwivedi103@gmail.com)  
+
+🔗 [LinkedIn](https://www.linkedin.com/in/palak-dwivedi) | [GitHub](https://github.com/Palak3125)
+
