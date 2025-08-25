@@ -17,17 +17,17 @@ A web application to track income, expenses, and debts with secure authenticatio
 
 ## 🚀 Live Demo & Repository
 
-- **GitHub Repository:** [Money Management App](https://github.com/Palak3125/tracker-app)
+- **GitHub Repository:** [Money Management App](https://github.com/Palak3125/expensetracker-app)
 - **Live Demo:** [View Live](https://expensetracker-app-taupe.vercel.app/)
 
 ## 📂 Installation & Setup
 
 ```bash
 # Clone the repository
-git clone https://github.com/Palak3125/tracker-app.git
+git clone https://github.com/Palak3125/expensetracker-app.git
 
 # Navigate into the project folder
-cd tracker-app
+cd expensetracker-app
 
 # Install dependencies
 npm install
