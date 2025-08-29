@@ -22,7 +22,8 @@ A web application to track income, expenses, and debts with secure authenticatio
 
 ## 📸 Screenshot
 
-![App Screenshot](src/assets/screenshot.png)
+![App Screenshot](src/assets/screenshot1.png)
+![App Screenshot](src/assets/screenshot2.png)
 
 ## 📂 Installation & Setup
 
