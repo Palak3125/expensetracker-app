@@ -1,4 +1,4 @@
-# 💰 Money Management App
+# 💰 Expense Tracker App
 
 A web application to track income, expenses, and debts with secure authentication, transaction history, and visual dashboards.
 
@@ -17,8 +17,13 @@ A web application to track income, expenses, and debts with secure authenticatio
 
 ## 🚀 Live Demo & Repository
 
-- **GitHub Repository:** [Money Management App](https://github.com/Palak3125/expensetracker-app)
+- **GitHub Repository:** [Expense Tracker App](https://github.com/Palak3125/expensetracker-app)
 - **Live Demo:** [View Live](https://expensetracker-app-taupe.vercel.app/)
+
+## 📸 Screenshot
+
+![App Screenshot](src/assets/screenshot1.png)
+![App Screenshot](src/assets/screenshot2.png)
 
 ## 📂 Installation & Setup
 
