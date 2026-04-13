@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
-import { signOut } from 'firebase/auth';
+import { signOut, onAuthStateChanged } from 'firebase/auth';
 import { auth } from './firebase';
 import Dashboard from './pages/Dashboard.jsx';
 import MoneyLent from './pages/MoneyLent.jsx';
@@ -14,7 +14,16 @@ import PrivateRoute from './pages/PrivateRoute.jsx';
 import PublicRoute from './pages/PublicRoute.jsx';
 
 function App() {
-return (
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  return (
     <Router>
       <div className="app">
         <header className="app-header">
@@ -34,13 +43,25 @@ return (
             </nav>
 
             <div className="nav-right">
-              <Link to="/login">
-                <button className="login-btn">Login</button>
-              </Link>
-              <Link to="/register">
-                <button className="signup-btn">Sign Up</button>
-              </Link>
-              <button onClick={() => signOut(auth)}  className="glass-btn">Logout</button>
+              {!user ? (
+                <>
+                  <Link to="/login">
+                    <button className="login-btn">Login</button>
+                  </Link>
+                  <Link to="/register">
+                    <button className="signup-btn">Sign Up</button>
+                  </Link>
+                </>
+              ) : (
+                <>
+                  {user?.email && (
+                    <span style={{ fontSize: '0.9rem', alignSelf: 'center', marginRight: '0.5rem', color: 'inherit' }}>
+                      {user.email}
+                    </span>
+                  )}
+                  <button onClick={() => signOut(auth)} className="glass-btn">Logout</button>
+                </>
+              )}
             </div>
           </div>
         </header>
