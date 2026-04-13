@@ -10,7 +10,6 @@ import Budget from './pages/Budget.jsx';
 import logo from './assets/logo.jpeg';
 import Login from "./pages/login.jsx";
 import Register from "./pages/Register.jsx"; 
-
 import PrivateRoute from './pages/PrivateRoute.jsx';
 import PublicRoute from './pages/PublicRoute.jsx';
 
