@@ -53,14 +53,7 @@ function App() {
                   </Link>
                 </>
               ) : (
-                <>
-                  {user?.email && (
-                    <span style={{ fontSize: '0.9rem', alignSelf: 'center', marginRight: '0.5rem', color: 'inherit' }}>
-                      {user.email}
-                    </span>
-                  )}
-                  <button onClick={() => signOut(auth)} className="glass-btn">Logout</button>
-                </>
+                <button onClick={() => signOut(auth)} className="glass-btn">Logout</button>
               )}
             </div>
           </div>
